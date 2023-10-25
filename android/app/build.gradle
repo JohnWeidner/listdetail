@@ -58,6 +58,19 @@ android {
             signingConfig signingConfigs.debug
         }
     }
+
+    flavorDimensions "default"
+
+    productFlavors {
+        simpsons {
+            dimension "default"
+            applicationId "com.sample.simpsonsviewer"
+        }
+        wire {
+            dimension  "default"
+            applicationId "com.sample.wireviewer"
+        }
+    }
 }
 
 flutter {
