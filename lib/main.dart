@@ -1,11 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:listdetail/api_client.dart';
-import 'package:listdetail/character_list_app.dart';
+import 'package:listdetail/app_config.dart';
+import 'package:listdetail/app_runner.dart';
 
 void main() {
-  runApp(
-    CharacterListApp(
-      futureCharacters: fetchCharacters(url: 'http://api.duckduckgo.com/?q=simpsons+characters&format=json'),
+  startApp(
+    AppConfig(
+      appName: 'Simpsons Character Viewer',
+      characterApiUrl: 'http://api.duckduckgo.com/?q=simpsons+characters&format=json',
+      lightColorScheme: ColorScheme.fromSeed(
+        seedColor: const Color(0xffffdf1c),
+        primary: const Color(0xffffdf1c),
+        onPrimary: Colors.black,
+      ),
+      darkColorScheme: ColorScheme.fromSeed(
+        seedColor: const Color(0xffffdf1c),
+        brightness: Brightness.dark,
+        primary: Colors.black,
+        onPrimary: Colors.yellow,
+      ),
     ),
   );
 }

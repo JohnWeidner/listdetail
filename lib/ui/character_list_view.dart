@@ -2,7 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:listdetail/model/character.dart';
 
 class CharacterListView extends StatefulWidget {
-  const CharacterListView({super.key, required this.characters, required this.onItemSelected, this.selectedCharacter});
+  const CharacterListView({
+    required this.characters,
+    required this.onItemSelected,
+    this.selectedCharacter,
+    super.key,
+  });
 
   final List<Character> characters;
   final Character? selectedCharacter;
