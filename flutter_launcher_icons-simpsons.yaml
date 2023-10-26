@@ -1,0 +1,7 @@
+flutter_icons:
+  image_path: "assets/app_icons/simpsons.png"
+  android: true # can specify file name here e.g. "ic_launcher"
+  ios: "assets/app_icons/simpsons.png"
+  adaptive_icon_background: "assets/app_icons/yellow.png" # only available for Android 8.0 devices and above
+  adaptive_icon_foreground: "assets/app_icons/s.png" # only available for Android 8.0 devices and above
+  remove_alpha_ios: true

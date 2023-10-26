@@ -6,7 +6,6 @@ import 'package:listdetail/model/character.dart';
 
 Future<List<Character>> fetchCharacters({required String url}) async {
   const nameDescriptionSeparator = ' - ';
-  //await Future.delayed(const Duration(seconds: 3)); // TODO delete this line
   final response = await http.get(Uri.parse(url));
   if (response.statusCode == 200) {
     final responseJson = jsonDecode(response.body) as Map<String, dynamic>;

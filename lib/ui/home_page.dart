@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:listdetail/bloc/character/character_bloc.dart';
+import 'package:listdetail/bloc/character/character_event.dart';
 import 'package:listdetail/model/character.dart';
 import 'package:listdetail/ui/character_list_view.dart';
 import 'package:listdetail/ui/character_view.dart';
@@ -6,11 +9,9 @@ import 'package:listdetail/ui/character_view.dart';
 class HomePage extends StatefulWidget {
   const HomePage({
     required this.title,
-    required this.characters,
     super.key,
   });
 
-  final Future<List<Character>> characters;
   final String title;
 
   @override
@@ -19,13 +20,15 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   Character? selectedCharacter;
-  String searchString = '';
   bool searching = false;
 
   TextEditingController controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    final characterState = context.watch<CharacterBloc>().state;
+    print('----->home_page build filter=${characterState.filter}');
+    final filteredCharacters = characterState.filteredCharacters;
     const separateListDetail = true; // TODO MediaQuery.sizeOf(context).shortestSide >= 600;
     return Scaffold(
       appBar: AppBar(
@@ -34,10 +37,10 @@ class _HomePageState extends State<HomePage> {
           IconButton(
             icon: Icon(searching ? Icons.close : Icons.search),
             onPressed: () {
+              context.read<CharacterBloc>().add(const FilterUpdated(filter: ''));
               setState(() {
                 searching = !searching;
                 if (!searching) {
-                  searchString = '';
                   controller.text = '';
                 }
               });
@@ -46,15 +49,9 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      body: FutureBuilder(
-        future: widget.characters,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            final allCharacters = snapshot.data!;
-            final filteredCharacters = allCharacters
-                .where((c) => c.title.toUpperCase().contains(searchString) || c.description.toUpperCase().contains(searchString))
-                .toList();
-            return Column(
+      body: characterState.loading
+          ? const Center(child: CircularProgressIndicator())
+          : Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 if (searching)
@@ -64,9 +61,7 @@ class _HomePageState extends State<HomePage> {
                       controller: controller,
                       decoration: const InputDecoration(hintText: 'Enter search text'),
                       onChanged: (value) {
-                        setState(() {
-                          searchString = value.toUpperCase();
-                        });
+                        context.read<CharacterBloc>().add(FilterUpdated(filter: value));
                       },
                     ),
                   ),
@@ -101,14 +96,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                 ),
               ],
-            );
-          } else if (snapshot.hasError) {
-            return Text(snapshot.error!.toString());
-          } else {
-            return const CircularProgressIndicator();
-          }
-        },
-      ),
+            ),
     );
   }
 }

@@ -1,0 +1,7 @@
+flutter_icons:
+  image_path: "assets/app_icons/wired.png"
+  android: true # can specify file name here e.g. "ic_launcher"
+  ios: true # can specify file name here e.g. "My-Launcher-Icon"
+  adaptive_icon_background: "assets/app_icons/tan.png" # only available for Android 8.0 devices and above
+  adaptive_icon_foreground: "assets/app_icons/w.png" # only available for Android 8.0 devices and above
+  remove_alpha_ios: true
