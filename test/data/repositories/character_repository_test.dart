@@ -63,8 +63,12 @@ void main() {
     });
 
     test('if request has expected format for two characters it returns a list of the characters', () async {
-      when(() => characterGetter.get()).thenAnswer((_) async => Response(
-          '{"RelatedTopics":[{"Icon":{"URL":"/url"},"Text":"Title - Description"},{"Icon":{"URL":"/url2"},"Text":"Title2 - Description2"}]}', 200));
+      when(() => characterGetter.get()).thenAnswer(
+        (_) async => Response(
+          '{"RelatedTopics":[{"Icon":{"URL":"/url"},"Text":"Title - Description"},{"Icon":{"URL":"/url2"},"Text":"Title2 - Description2"}]}',
+          200,
+        ),
+      );
       final repo = CharacterRepository(characterGetter: characterGetter);
       final characters = await repo.fetchCharacters();
       expect(characters.length, 2);
@@ -74,8 +78,12 @@ void main() {
     });
 
     test('if request contains characters without the expected Title - Description format, that character is excluded', () async {
-      when(() => characterGetter.get()).thenAnswer((_) async => Response(
-          '{"RelatedTopics":[{"Icon":{"URL":"/url"},"Text":"Title - Description"},{"Icon":{"URL":"/url2"},"Text":"Title2 * Description2"}]}', 200));
+      when(() => characterGetter.get()).thenAnswer(
+        (_) async => Response(
+          '{"RelatedTopics":[{"Icon":{"URL":"/url"},"Text":"Title - Description"},{"Icon":{"URL":"/url2"},"Text":"Title2 * Description2"}]}',
+          200,
+        ),
+      );
       final repo = CharacterRepository(characterGetter: characterGetter);
       final characters = await repo.fetchCharacters();
       expect(characters.length, 1);
