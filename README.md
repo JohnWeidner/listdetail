@@ -31,3 +31,7 @@ returned by the REST API so that we can update the app if needed. Alternatively,
 control so that we are not at risk of our app breaking if someone changes the format of the response from the REST API.
 
 If you have any questions, please call John at 405 436 3538.
+
+## DISCLAIMER
+
+bard.google.com and previous personal flutter projects were used during the process of creating this app.
