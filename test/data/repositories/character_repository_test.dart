@@ -29,7 +29,6 @@ void main() {
         await repo.fetchCharacters();
         fail('fetching characters should have thrown an exception when getting a 404 response');
       } catch (e) {
-        print(e);
         expect(e, isInstanceOf<Exception>());
       }
     });
@@ -41,9 +40,15 @@ void main() {
         await repo.fetchCharacters();
         fail('fetching characters should have thrown an exception when the request does not return a json response');
       } catch (e) {
-        print(e);
         expect(e, isInstanceOf<Exception>());
       }
+    });
+
+    test('if request has expected format for zero characters it returns an empty list', () async {
+      when(() => characterGetter.get()).thenAnswer((_) async => Response('{"RelatedTopics":[]}', 200));
+      final repo = CharacterRepository(characterGetter: characterGetter);
+      final characters = await repo.fetchCharacters();
+      expect(characters.length, 0);
     });
 
     test('if request has expected format for one character it returns a list of the characters', () async {

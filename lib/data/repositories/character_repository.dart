@@ -34,7 +34,7 @@ class CharacterRepository {
             log('unexpected Text value $text');
           }
         } catch (e) {
-          // TODO - send an analytic event so that we know this API is causing an unexpected error
+          // TODO - consider sending an analytic event so that we know this API is causing an unexpected error
           log('error parsing $characterJson');
         }
       }
