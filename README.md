@@ -4,10 +4,13 @@ This project demonstrates a basic flutter application. It includes the following
 
 - Multiple build flavors to build two different versions of the app.
 - Application architecture separated into business logic (bloc), data (repositories), and UI
+- Dark or Light theme based on system preferences
 - Unit test of the most critical class which is the CharacterRepository which parses the response from the REST api.
-- The app uses HydratedBloc to keep a cached copy of the list of characters. In this way if the user off network (on an airplane) but
+- The app uses HydratedBloc to keep a cached copy of the list of characters. In this way if the user does not have an active network connection (on an
+  airplane) but
   needs access to this critical list of character descriptions, they can still see that data. (assuming they've run the app before while they were
   online).
+- Pull-to-refresh support on the character list so that the user can force a data reload if they think there might be updated information.
 
 ## Getting Started
 
