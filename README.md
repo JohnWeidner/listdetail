@@ -12,10 +12,12 @@ This project demonstrates a basic flutter application. It includes the following
 ## Getting Started
 
 When building the app, be sure to specify a "flavor" as either "simpsons" or "wire" and run the main.dart for The Simpsons but run main_wire.dart for
-The Wire.  
+The Wire.
+
 Examples:
 
 flutter run --flavor simpsons lib/main.dart
+
 flutter run --flavor wire lib/main_wire.dart
 
 ## TODO
