@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:listdetail/model/character.dart';
+import 'package:listdetail/data/models/character.dart';
 
 part 'character_state.g.dart';
 

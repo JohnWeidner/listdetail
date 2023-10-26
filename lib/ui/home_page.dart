@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:listdetail/bloc/character/character_bloc.dart';
 import 'package:listdetail/bloc/character/character_event.dart';
-import 'package:listdetail/model/character.dart';
+import 'package:listdetail/data/models/character.dart';
 import 'package:listdetail/ui/character_list_view.dart';
 import 'package:listdetail/ui/character_view.dart';
 

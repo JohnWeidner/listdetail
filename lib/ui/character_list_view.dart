@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:listdetail/model/character.dart';
+import 'package:listdetail/data/models/character.dart';
 
 class CharacterListView extends StatefulWidget {
   const CharacterListView({
