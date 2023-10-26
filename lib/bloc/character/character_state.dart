@@ -10,6 +10,7 @@ class CharacterState extends Equatable {
     required this.characters,
     required this.filter,
     required this.loading,
+    required this.error,
   }) : super();
 
   factory CharacterState.fromJson(
@@ -21,22 +22,26 @@ class CharacterState extends Equatable {
         characters: [],
         filter: '',
         loading: false,
+        error: false,
       );
 
   final List<Character> characters;
   final String filter;
   final bool loading;
+  final bool error;
 
   CharacterState copyWith({
     Character? currentCharacter,
     List<Character>? characters,
     String? filter,
     bool? loading,
+    bool? error,
   }) =>
       CharacterState(
         characters: characters ?? this.characters,
         filter: filter ?? this.filter,
         loading: loading ?? this.loading,
+        error: error ?? this.error,
       );
 
   Map<String, dynamic> toJson() => _$CharacterStateToJson(this);
@@ -54,5 +59,6 @@ class CharacterState extends Equatable {
         characters,
         loading,
         filter,
+        error,
       ];
 }

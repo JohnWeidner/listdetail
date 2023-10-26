@@ -13,6 +13,7 @@ CharacterState _$CharacterStateFromJson(Map<String, dynamic> json) =>
           .toList(),
       filter: json['filter'] as String,
       loading: json['loading'] as bool,
+      error: json['error'] as bool,
     );
 
 Map<String, dynamic> _$CharacterStateToJson(CharacterState instance) =>
@@ -20,4 +21,5 @@ Map<String, dynamic> _$CharacterStateToJson(CharacterState instance) =>
       'characters': instance.characters,
       'filter': instance.filter,
       'loading': instance.loading,
+      'error': instance.error,
     };

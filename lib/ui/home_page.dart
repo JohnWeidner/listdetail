@@ -27,9 +27,8 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final characterState = context.watch<CharacterBloc>().state;
-    print('----->home_page build filter=${characterState.filter}');
     final filteredCharacters = characterState.filteredCharacters;
-    const separateListDetail = true; // TODO MediaQuery.sizeOf(context).shortestSide >= 600;
+    final separateListDetail = MediaQuery.sizeOf(context).shortestSide < 600;
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -49,54 +48,79 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      body: characterState.loading
-          ? const Center(child: CircularProgressIndicator())
-          : Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                if (searching)
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: TextField(
-                      controller: controller,
-                      decoration: const InputDecoration(hintText: 'Enter search text'),
-                      onChanged: (value) {
-                        context.read<CharacterBloc>().add(FilterUpdated(filter: value));
-                      },
-                    ),
-                  ),
-                Expanded(
-                  child: separateListDetail
-                      ? CharacterListView(
-                          characters: filteredCharacters,
-                          onItemSelected: (character) {
-                            Navigator.pushNamed(context, '/detail', arguments: character);
+      body: characterState.error
+          ? const RetryError()
+          : characterState.loading
+              ? const Center(child: CircularProgressIndicator())
+              : Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (searching)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: TextField(
+                          controller: controller,
+                          decoration: const InputDecoration(hintText: 'Enter search text'),
+                          onChanged: (value) {
+                            context.read<CharacterBloc>().add(FilterUpdated(filter: value));
                           },
-                        )
-                      : Row(
-                          children: <Widget>[
-                            Expanded(
-                              child: CharacterListView(
-                                characters: filteredCharacters,
-                                selectedCharacter: selectedCharacter,
-                                onItemSelected: (character) {
-                                  setState(() {
-                                    selectedCharacter = character;
-                                  });
-                                },
-                              ),
-                            ),
-                            if (selectedCharacter != null)
-                              Expanded(
-                                child: CharacterView(
-                                  character: selectedCharacter!,
-                                ),
-                              ),
-                          ],
                         ),
+                      ),
+                    Expanded(
+                      child: separateListDetail
+                          ? CharacterListView(
+                              characters: filteredCharacters,
+                              onItemSelected: (character) {
+                                Navigator.pushNamed(context, '/detail', arguments: character);
+                              },
+                            )
+                          : Row(
+                              children: <Widget>[
+                                Expanded(
+                                  child: CharacterListView(
+                                    characters: filteredCharacters,
+                                    selectedCharacter: selectedCharacter,
+                                    onItemSelected: (character) {
+                                      setState(() {
+                                        selectedCharacter = character;
+                                      });
+                                    },
+                                  ),
+                                ),
+                                if (selectedCharacter != null)
+                                  Expanded(
+                                    child: CharacterView(
+                                      character: selectedCharacter!,
+                                    ),
+                                  ),
+                              ],
+                            ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+    );
+  }
+}
+
+class RetryError extends StatelessWidget {
+  const RetryError({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Text('An error occurred while loading the characters.'),
+          const SizedBox(height: 50),
+          TextButton(
+            child: const Text('Retry'),
+            onPressed: () {
+              context.read<CharacterBloc>().add(ReloadDataRequested());
+            },
+          ),
+        ],
+      ),
     );
   }
 }

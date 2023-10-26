@@ -17,3 +17,5 @@ class FilterUpdated extends CharacterEvent {
 }
 
 class AppStarted extends CharacterEvent {}
+
+class ReloadDataRequested extends CharacterEvent {}
