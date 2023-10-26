@@ -52,51 +52,54 @@ class _HomePageState extends State<HomePage> {
           ? const RetryError()
           : characterState.loading
               ? const Center(child: CircularProgressIndicator())
-              : Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    if (searching)
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: TextField(
-                          controller: controller,
-                          decoration: const InputDecoration(hintText: 'Enter search text'),
-                          onChanged: (value) {
-                            context.read<CharacterBloc>().add(FilterUpdated(filter: value));
-                          },
+              : RefreshIndicator(
+                  onRefresh: () async => context.read<CharacterBloc>().add(ReloadDataRequested()),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (searching)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: TextField(
+                            controller: controller,
+                            decoration: const InputDecoration(hintText: 'Enter search text'),
+                            onChanged: (value) {
+                              context.read<CharacterBloc>().add(FilterUpdated(filter: value));
+                            },
+                          ),
                         ),
-                      ),
-                    Expanded(
-                      child: separateListDetail
-                          ? CharacterListView(
-                              characters: filteredCharacters,
-                              onItemSelected: (character) {
-                                Navigator.pushNamed(context, '/detail', arguments: character);
-                              },
-                            )
-                          : Row(
-                              children: <Widget>[
-                                Expanded(
-                                  child: CharacterListView(
-                                    characters: filteredCharacters,
-                                    selectedCharacter: selectedCharacter,
-                                    onItemSelected: (character) {
-                                      setState(() {
-                                        selectedCharacter = character;
-                                      });
-                                    },
-                                  ),
-                                ),
-                                if (selectedCharacter != null)
+                      Expanded(
+                        child: separateListDetail
+                            ? CharacterListView(
+                                characters: filteredCharacters,
+                                onItemSelected: (character) {
+                                  Navigator.pushNamed(context, '/detail', arguments: character);
+                                },
+                              )
+                            : Row(
+                                children: <Widget>[
                                   Expanded(
-                                    child: CharacterView(
-                                      character: selectedCharacter!,
+                                    child: CharacterListView(
+                                      characters: filteredCharacters,
+                                      selectedCharacter: selectedCharacter,
+                                      onItemSelected: (character) {
+                                        setState(() {
+                                          selectedCharacter = character;
+                                        });
+                                      },
                                     ),
                                   ),
-                              ],
-                            ),
-                    ),
-                  ],
+                                  if (selectedCharacter != null)
+                                    Expanded(
+                                      child: CharacterView(
+                                        character: selectedCharacter!,
+                                      ),
+                                    ),
+                                ],
+                              ),
+                      ),
+                    ],
+                  ),
                 ),
     );
   }

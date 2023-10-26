@@ -7,7 +7,6 @@ import 'package:listdetail/character_list_app.dart';
 import 'package:path_provider/path_provider.dart';
 
 Future<void> startApp(AppConfig appConfig) async {
-  log('startApp for ${appConfig.appName}');
   WidgetsFlutterBinding.ensureInitialized();
 
   HydratedBloc.storage = await HydratedStorage.build(

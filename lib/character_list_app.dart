@@ -22,7 +22,7 @@ class CharacterListApp extends StatelessWidget {
       child: MaterialApp(
         theme: ThemeData(colorScheme: appConfig.lightColorScheme),
         darkTheme: ThemeData(colorScheme: appConfig.darkColorScheme),
-        title: 'Anywhere Project',
+        title: appConfig.appName,
         routes: {
           '/detail': (context) {
             final character = ModalRoute.of(context)!.settings.arguments! as Character;
