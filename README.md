@@ -25,9 +25,6 @@ flutter run --flavor wire lib/main_wire.dart
 
 ## TODO
 
-When building the iOS version, the appropriate flavor specific icon is not being used. However, on Android this is working as intended.
-Further research is still needed to get that working properly on iOS.
-
 It would probably be appropriate to add analytics and crashlytics. This would allow us to track which character is most frequently viewed
 and to track any crashes that may be happening. It might also be nice to have a service that detects changes to the responses being
 returned by the REST API so that we can update the app if needed. Alternatively, we should copy that data to a server that we
